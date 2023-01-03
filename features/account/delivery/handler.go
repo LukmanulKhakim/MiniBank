@@ -30,8 +30,11 @@ func (ah *accountHandler) AddAccount() echo.HandlerFunc {
 		if err := c.Bind(&input); err != nil {
 			return c.JSON(http.StatusBadRequest, FailResponse("cannot bind input"))
 		}
-		if strings.TrimSpace(input.Name) == "" || input.Balance == 0 {
-			return c.JSON(http.StatusBadRequest, FailResponse("input empty"))
+		if strings.TrimSpace(input.Name) == "" {
+			return c.JSON(http.StatusBadRequest, FailResponse("name empty"))
+		}
+		if input.Balance == 0 {
+			return c.JSON(http.StatusBadRequest, FailResponse("balance empty"))
 		}
 		cnv := ToDomain(input)
 		res, err := ah.srv.AddAccount(cnv)

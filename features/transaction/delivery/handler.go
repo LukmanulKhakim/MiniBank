@@ -32,6 +32,9 @@ func (th *trxHandler) AddTrx() echo.HandlerFunc {
 		if input.Credit_account == 0 || input.Debit_account == 0 || input.Amount == 0 {
 			return c.JSON(http.StatusBadRequest, FailResponse("input empty"))
 		}
+		if input.Credit_account == input.Debit_account {
+			return c.JSON(http.StatusBadRequest, FailResponse("credit and debit same"))
+		}
 		cnv := ToDomain(input)
 		res, err := th.srv.AddTrx(cnv)
 		if err != nil {

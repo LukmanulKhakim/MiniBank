@@ -25,7 +25,7 @@ func (rq *repoQuery) Add(new domain.TransactionCore) (domain.TransactionCore, er
 	var cnv Transaction = FromDomain(new)
 	var cnv2, cnv3 Account
 	var res2, res3 float64
-
+	//var error error
 	row := rq.db.Table("accounts").Where("id", new.Debit_account).Select("balance").Row()
 	row.Scan(&res2)
 
